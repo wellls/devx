@@ -2,14 +2,22 @@ package http
 
 import (
 	"database/sql"
-	"log"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func (h *handler) GetUsers(c *gin.Context) {
-	selectAll(h.db)
+
+	err := selectAll(h.db)
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "erro"})
+
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{"message": "List of users"})
 }
 
@@ -20,7 +28,7 @@ func selectAll(db *sql.DB) error {
 		return err
 	}
 
-	log.Println(rows)
+	fmt.Println(rows)
 
 	return nil
 }
