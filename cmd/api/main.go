@@ -16,7 +16,7 @@ func main() {
 	router := gin.Default()
 
 	// Set up API routes
-	api.SetupRoutes(router)
+	api.SetupRoutes(router, cfg.DB)
 
 	// Start the server
 	address := fmt.Sprintf(":%d", cfg.ServerAddress)
